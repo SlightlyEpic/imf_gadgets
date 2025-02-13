@@ -10,7 +10,7 @@ export const gadgets = pgTable('gadgets', {
         onDelete: 'cascade',
         onUpdate: 'cascade',
     }).notNull(),
-    name: varchar('name', { length: 128 }).notNull(),
+    name: varchar('name', { length: 128 }).notNull().unique(),
     status: gadgetStatus('status').notNull(),
 });
 
