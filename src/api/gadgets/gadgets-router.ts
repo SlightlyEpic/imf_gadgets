@@ -2,9 +2,12 @@ import { Router } from 'express';
 import { type AppDependencies } from '@/types/app-DI';
 import { validateBody } from '@/middlewares/body-validator';
 
-import { gadgetsDeleteHandler, gadgetsGetHandler, gadgetsPatchHandler, gadgetsPostHandler } from '.';
-import { selfDestructPostHandler } from './self-destruct';
+import { selfDestructPostHandler } from './self-destruct.post';
 import { gadgetsDeleteSchema, gadgetsPatchSchema } from '@/types/api/gadgets';
+import { gadgetsGetHandler } from './index.get';
+import { gadgetsPostHandler } from './index.post';
+import { gadgetsPatchHandler } from './index.patch';
+import { gadgetsDeleteHandler } from './index.delete';
 
 export const gadgetsRouter = (di: AppDependencies): Router => {
     const router = Router({ mergeParams: true });

@@ -14,13 +14,23 @@ export function createApp(di: AppDependencies): ReturnType<typeof express> {
             info: {
                 title: 'IMF Gadget API',
                 version: '1.0.0',
+                description: 'An API for managing IMF\'s gadget inventory, including retrieval, updates, and self-destruction.'
+                + '<br>Made by Abhigyan Niranjan as Upraised\'s Backend Intern Assignment.',
+                
             },
+            tags: [
+                {
+                    name: 'Gadgets',
+                    description: 'Endpoints for managing IMF gadgets, including inventory and self-destruction.'
+                },
+                {
+                    name: 'Auth',
+                    description: 'Authentication and authorization endpoints for securing API access.'
+                }
+            ]
         },
-        servers: [{
-            url: 'http://localhost:3000'
-        }],
         apis: [
-            // './dist/api/api-router.js',
+            './dist/api/gadgets/*.js',
             './dist/api/auth/*.js',
         ],
     };

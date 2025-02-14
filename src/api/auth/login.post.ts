@@ -11,7 +11,11 @@ import { QueryError } from '@/utils/pg-error';
  * /api/auth/login:
  *   post:
  *     summary: Login
- *     description: Login endpoint to authenticate a user and get access and refresh tokens.
+ *     description: |
+ *       Login endpoint to authenticate a user and get access and refresh tokens.<br />
+ *       Demo credentials - <br />
+ *       email - `user@example.com` <br />
+ *       password - `password123`
  *     tags:
  *       - Auth
  *     requestBody:

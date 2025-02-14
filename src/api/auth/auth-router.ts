@@ -2,9 +2,9 @@ import { Router } from 'express';
 import { type AppDependencies } from '@/types/app-DI';
 import { validateBody } from '@/middlewares/body-validator';
 
-import { loginPostHandler } from './login';
-import { signupPostHandler } from './signup';
-import { logoutPostHandler } from './logout';
+import { loginPostHandler } from './login.post';
+import { signupPostHandler } from './signup.post';
+import { logoutPostHandler } from './logout.post';
 import { loginBodySchema } from '@/types/api/auth/login';
 import { signupBodySchema } from '@/types/api/auth/signup';
 
