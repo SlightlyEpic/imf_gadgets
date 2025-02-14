@@ -6,11 +6,11 @@ export default defineConfig({
     schema: './src/database/schema/*.sql.ts',
     out: './src/database/migrations',
     dbCredentials: {
-        user: process.env.POSTGRES_USER as string,
-        password: process.env.POSTGRES_PASSWORD as string,
-        host: process.env.POSTGRES_HOST as string,
-        port: Number(process.env.POSTGRES_PORT as string),
-        database: process.env.POSTGRES_DATABASE as string,
+        user: process.env.POSTGRES_USER,
+        password: process.env.POSTGRES_PASSWORD,
+        host: process.env.POSTGRES_HOST,
+        port: Number(process.env.POSTGRES_PORT),
+        database: process.env.POSTGRES_DATABASE,
         ssl: 'prefer'
     },
     entities: {

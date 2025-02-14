@@ -8,6 +8,7 @@ export const envSchema = z.object({
     POSTGRES_DATABASE: z.string().min(1),
     PORT: z.string().min(1),
     JWT_SIGNING_SECRET: z.string().min(1),
+    VERBOSE: z.enum(['0', '1', '2']).transform(v => Number(v) as (1 | 2 | 3))
 });
 
 export type Env = z.infer<typeof envSchema>;

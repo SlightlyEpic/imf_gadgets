@@ -6,6 +6,87 @@ import { type AppDependencies } from '@/types/app-DI';
 import type { LoginPostBody, LoginPostErrorResponse, LoginPostSuccessResponse } from '@/types/api/auth/login';
 import { QueryError } from '@/utils/pg-error';
 
+/**
+ * @openapi
+ * /api/auth/login:
+ *   post:
+ *     summary: Login
+ *     description: Login endpoint to authenticate a user and get access and refresh tokens.
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: The user's email address.
+ *                 example: user@example.com
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 description: The user's password.
+ *                 example: password123
+ *     responses:
+ *       200:
+ *         description: Login successful. Returns user details and sets access and refresh tokens as cookies.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Login successful
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       example: 12345
+ *                     email:
+ *                       type: string
+ *                       example: user@example.com
+ *         headers:
+ *           Set-Cookie:
+ *             schema:
+ *               type: string
+ *               example: AccessToken=<token>; HttpOnly; SameSite=Strict; Max-Age=3600
+ *       400:
+ *         description: Invalid credentials provided.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Invalid_Credentials
+ *                 errorMessage:
+ *                   type: string
+ *                   example: Invalid Credentials
+ *       500:
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Unknown_Error
+ *                 errorMessage:
+ *                   type: string
+ *                   example: Unknown Error
+ */
+
 export const loginPostHandler = (di: AppDependencies): RequestHandler => 
     async (req, res) => {
         const body = req.body as LoginPostBody;

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>IMF Gadgets API Spec</title>
+  
+        <script src="https://unpkg.com/@stoplight/elements/web-components.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css">
+
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+            }
+
+            body > *, 
+            body > * > *, 
+            body > * > * > *,
+            body > * > * > * > *,
+            body > * > * > * > * > * {
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            body > * > * > * > * > * > * {
+                flex-grow: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <elements-api
+            apiDescriptionUrl="/openapi.json"
+            router="hash"
+        />
+    </body>
+</html>
