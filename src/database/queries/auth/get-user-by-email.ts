@@ -10,11 +10,9 @@ import { type getDB } from '@/database/db';
 export async function getUserByEmail(
     drizzle: ReturnType<typeof getDB>,
     email: string,
-    withRelations: { gadgets?: true; tokens?: true }
 ) {
     const user = await drizzle.query.users.findFirst({
         where: eq(users.email, email),
-        with: withRelations,
     });
 
     return user;
