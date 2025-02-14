@@ -44,8 +44,8 @@ export const loginPostHandler = (di: AppDependencies): RequestHandler =>
         try {
             await queries.auth.addRefreshToken(di.drizzle, user.id, refreshTokenStr);
             res
-                .cookie('AccessToken', accessTokenStr, { httpOnly: true })
-                .cookie('RefreshToken', refreshTokenStr, { httpOnly: true })
+                .cookie('AccessToken', accessTokenStr, { httpOnly: true, sameSite: true, maxAge: 1000 * 60 * 60 })
+                .cookie('RefreshToken', refreshTokenStr, { httpOnly: true, sameSite: true, maxAge: 1000 * 60 * 60 * 24 * 30 })
                 .send(resp);
         } catch(_err: unknown) {
             const err = _err as QueryError;

@@ -60,14 +60,15 @@ function verifyPromise(s: string, secret: string, opts: Parameters<typeof jwt.ve
     });
 }
 
-export async function verifyAccessTokenString(env: Env, accessTokenString: string): Promise<AccessToken | undefined> {
+type VerifyError = 'UnknownError' | 'TokenExpiredError' | 'InvalidTokenError';
+export async function verifyAccessTokenString(env: Env, accessTokenString: string): Promise<AccessToken | VerifyError> {
     try {
         const _token = await verifyPromise(accessTokenString, env.JWT_SIGNING_SECRET, {
             issuer: 'IMF Gadgets API',
             maxAge: '1h',
         }) as AccessToken;
 
-        if(_token.type !== 'access') return undefined;
+        if(_token.type !== 'access') return 'InvalidTokenError';
 
         const token: AccessToken = {
             iss: _token.iss,
@@ -79,19 +80,21 @@ export async function verifyAccessTokenString(env: Env, accessTokenString: strin
         };
 
         return token;
-    } catch(err) {
-        return undefined;
+    } catch(err: any) {
+        if(err.name === 'TokenExpiredError') return 'TokenExpiredError';
+        if(err.name === 'JsonWebTokenError') return 'InvalidTokenError';
+        return 'UnknownError';
     }
 }
 
-export async function verifyRefreshToken(env: Env, refreshTokenString: string): Promise<RefreshToken | undefined> {
+export async function verifyRefreshTokenString(env: Env, refreshTokenString: string): Promise<RefreshToken | VerifyError> {
     try {
         const _token = await verifyPromise(refreshTokenString, env.JWT_SIGNING_SECRET, {
             issuer: 'IMF Gadgets API',
             maxAge: '30d',
         }) as RefreshToken;
 
-        if(_token.type !== 'refresh') return undefined;
+        if(_token.type !== 'refresh') return 'InvalidTokenError';
 
         const token: RefreshToken = {
             iss: _token.iss,
@@ -103,7 +106,9 @@ export async function verifyRefreshToken(env: Env, refreshTokenString: string): 
         };
 
         return token;
-    } catch(err) {
-        return undefined;
+    } catch(err: any) {
+        if(err.name === 'TokenExpiredError') return 'TokenExpiredError';
+        if(err.name === 'JsonWebTokenError') return 'InvalidTokenError';
+        return 'UnknownError';
     }
 }
