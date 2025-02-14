@@ -114,7 +114,7 @@ export const gadgetsPatchHandler = (di: AppDependencies): RequestHandler =>
                 res.status(400).send(resp);
             } else if(err.type === 'No_Match_Error') {
                 const resp: GadgetsPatchErrorResponse = {
-                    error: 'Invalid_Id',
+                    error: 'Invalid_Gadget_Id',
                     errorMessage: 'You don\'t have any gadget with this Id',
                 };
                 res.status(400).send(resp);
@@ -135,6 +135,26 @@ export const gadgetsDeleteHandler = (di: AppDependencies): RequestHandler =>
         const body = req.body as GadgetsDeleteBody;
 
         try {
+            const gadget = await queries.gadgets.getGadget(di.drizzle, body.id);
+
+            if(!gadget) {
+                const resp: GadgetsDeleteErrorResponse = {
+                    error: 'Invalid_Gadget_Id',
+                    errorMessage: 'You don\'t have any gadget with this Id',
+                };
+                res.status(400).send(resp);
+                return;
+            }
+
+            if(gadget.status === 'Destroyed') {
+                const resp: GadgetsDeleteErrorResponse = {
+                    error: 'Gadget_Already_Decommissioned',
+                    errorMessage: 'Gadget is already decommissioned',
+                };
+                res.status(400).send(resp);
+                return;
+            }
+
             await queries.gadgets.updateGadgetIfOwned(
                 di.drizzle, user.id, body.id, {
                     status: 'Decommissioned',
@@ -150,7 +170,7 @@ export const gadgetsDeleteHandler = (di: AppDependencies): RequestHandler =>
             const err = _err as QueryError;
             if(err.type === 'No_Match_Error') {
                 const resp: GadgetsDeleteErrorResponse = {
-                    error: 'Invalid_Id',
+                    error: 'Invalid_Gadget_Id',
                     errorMessage: 'You don\'t have any gadget with this Id',
                 };
                 res.status(400).send(resp);

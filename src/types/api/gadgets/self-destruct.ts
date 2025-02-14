@@ -12,7 +12,7 @@ export type SelfDestructSuccessResponse = {
 }
 
 export type SelfDestructErrorResponse = AuthenticationError | ValidationError<SelfDestructPostBody> | {
-    error: 'Unknown_Error' | 'Invalid_Code' | 'Invalid_Gadget_Id',
+    error: 'Unknown_Error' | 'Invalid_Code' | 'Invalid_Gadget_Id' | 'Gadget_Already_Destroyed',
     errorMessage: string,
     details?: unknown,
 }

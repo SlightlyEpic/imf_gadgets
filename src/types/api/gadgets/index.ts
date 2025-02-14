@@ -37,7 +37,7 @@ export type GadgetsPatchSuccessResponse = {
 }
 
 export type GadgetsPatchErrorResponse = AuthenticationError | ValidationError<GadgetsPatchBody> | {
-    error: 'Unknown_Error' | 'Duplicate_Name' | 'Invalid_Id',
+    error: 'Unknown_Error' | 'Duplicate_Name' | 'Invalid_Gadget_Id',
     errorMessage: string,
     details?: unknown,
 }
@@ -53,7 +53,7 @@ export type GadgetsDeleteSuccessResponse = {
 }
 
 export type GadgetsDeleteErrorResponse = AuthenticationError | ValidationError<GadgetsDeleteBody> | {
-    error: 'Unknown_Error' | 'Invalid_Id',
+    error: 'Unknown_Error' | 'Invalid_Gadget_Id' | 'Gadget_Already_Decommissioned',
     errorMessage: string,
     details?: unknown,
 }
