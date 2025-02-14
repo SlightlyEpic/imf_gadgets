@@ -6,6 +6,59 @@ import type { GadgetsPostErrorResponse, GadgetsPostSuccessResponse } from '@/typ
 import { randomGadgetName } from '@/utils/gadget-names';
 import { type QueryError } from '@/utils/pg-error';
 
+/**
+ * @swagger
+ * /api/gadgets:
+ *   post:
+ *     summary: Create a new gadget
+ *     description: Adds a new gadget to the user's inventory with a randomly generated codename.
+ *     tags:
+ *       - Gadgets
+ *     security:
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: false
+ *     responses:
+ *       200:
+ *         description: Successfully created a new gadget.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Successfully created gadget
+ *                 gadget:
+ *                   $ref: '#/components/schemas/Gadget'
+ *       400:
+ *         description: Invalid user ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Invalid_User_Id
+ *                 errorMessage:
+ *                   type: string
+ *                   example: Invalid User Id
+ *       500:
+ *         description: Unknown error occurred
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Unknown_Error
+ *                 errorMessage:
+ *                   type: string
+ *                   example: Unknown Error
+ */
+
 export const gadgetsPostHandler = (di: AppDependencies): RequestHandler =>
     async (req, res) => {
         // @ts-expect-error

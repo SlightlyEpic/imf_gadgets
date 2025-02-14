@@ -47,4 +47,3 @@ export const gadgetsPatchHandler = (di: AppDependencies): RequestHandler =>
             }
         }
     };
-

@@ -4,6 +4,18 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>IMF Gadgets API Spec</title>
+
+        <script>
+            (function() {
+                const originalFetch = window.fetch;
+                window.fetch = function(url, options = {}) {
+                    return originalFetch(url, {
+                    ...options,
+                    credentials: 'include' // Ensure cookies are sent
+                    });
+                };
+            })();
+        </script>
   
         <script src="https://unpkg.com/@stoplight/elements/web-components.min.js"></script>
         <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css">

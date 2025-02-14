@@ -30,6 +30,7 @@ export function createApp(di: AppDependencies): ReturnType<typeof express> {
             ]
         },
         apis: [
+            './dist/api/components.js',
             './dist/api/gadgets/*.js',
             './dist/api/auth/*.js',
         ],
