@@ -7,14 +7,14 @@ export const signupBodySchema = z.object({
     password: z.string().min(1).max(64),
 });
 
-export type PostSignupBody = z.infer<typeof signupBodySchema>;
+export type SignupPostBody = z.infer<typeof signupBodySchema>;
 
-export type PostSignupSuccessResponse = {
-    message: 'Signup successful',
-    user: Omit<typeof schema.users.$inferSelect, 'passwordHash'>,
+export type SignupPostSuccessResponse = {
+    message: string,
+    user: Omit<typeof schema.users.$inferSelect, 'passwordHash' | 'salt'>,
 };
 
-export type PostSignupErrorResponse = ValidationError<PostSignupBody> | {
+export type SignupPostErrorResponse = ValidationError<SignupPostBody> | {
     error: 'Unknown_Error' | 'Email_In_Use',
     errorMessage: string,
     details?: unknown,

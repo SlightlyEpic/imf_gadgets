@@ -11,7 +11,8 @@ export const validateBody = <T>(schema: ZodSchema<T>): RequestHandler =>
                 errorMessage: 'Request body validation failed',
                 details: parseResult.error,
             } satisfies ValidationError<T>)
+        } else {
+            req.body = parseResult.data;
+            next();
         }
-
-        next();
     }

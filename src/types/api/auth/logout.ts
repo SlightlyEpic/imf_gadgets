@@ -1,3 +1,3 @@
-export type PostLogoutSuccessResponse = {
-    message: 'Logout successful',
+export type LogoutPostSuccessResponse = {
+    message: string,
 };

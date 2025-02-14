@@ -6,6 +6,7 @@ import { refreshTokens } from './refreshTokens.sql';
 export const users = pgTable('users', {
     id: uuid('id').defaultRandom().primaryKey(),
     email: varchar('email', { length: 255 }).unique().notNull(),
+    salt: varchar('salt', { length: 127 }).notNull(),
     passwordHash: varchar('password_hash', { length: 255 }).notNull(),
 });
 

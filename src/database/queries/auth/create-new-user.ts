@@ -11,11 +11,12 @@ import { isUniqueViolation, QueryError } from '@/utils/pg-error';
 export async function createNewUser(
     drizzle: ReturnType<typeof getDB>,
     email: string,
+    salt: string,
     passwordHash: string,
 ) {
     try {
         const [user] = await drizzle.insert(users)
-        .values({ email, passwordHash })
+        .values({ email, salt, passwordHash })
         .returning();
 
         return user;
