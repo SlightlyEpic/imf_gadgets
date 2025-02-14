@@ -1,6 +1,7 @@
 import { relations } from 'drizzle-orm';
 import { pgTable, varchar, uuid, pgEnum } from 'drizzle-orm/pg-core';
 import { users } from './users.sql';
+import { timestamp } from 'drizzle-orm/pg-core';
 
 export const gadgetStatus = pgEnum('gadget_status', ['Available', 'Deployed', 'Destroyed', 'Decommissioned']);
 
@@ -12,6 +13,7 @@ export const gadgets = pgTable('gadgets', {
     }).notNull(),
     name: varchar('name', { length: 128 }).notNull().unique(),
     status: gadgetStatus('status').notNull(),
+    decommissionedAt: timestamp('decommissioned_at'),
 });
 
 export const gadgetRelations = relations(gadgets, ({ one }) => ({
