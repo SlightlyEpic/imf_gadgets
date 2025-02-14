@@ -1,4 +1,5 @@
 import { type PostgresError } from 'postgres';
+import z from 'zod';
 
 // Example error:
 // {
@@ -32,4 +33,9 @@ export class QueryError {
         this.message = args.message;
         this.cause = args.cause;
     }
+}
+
+export function isUUID(s: string): boolean {
+    return !z.string().uuid().safeParse(s).error;
+    
 }

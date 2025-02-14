@@ -9,7 +9,8 @@ import { gadgetStatus } from '@/database/schema/gadgets.sql';
  * @openapi
  * /api/gadgets:
  *   get:
- *     summary: Retrieve a list of gadgets owned by the authenticated user.
+ *     summary: List your gadgets
+ *     description: Retrieve a list of gadgets owned by the authenticated user.
  *     tags:
  *       - Gadgets
  *     security:

@@ -17,6 +17,9 @@ export async function updateGadgetIfOwned(
     updates: Partial<Omit<typeof gadgets.$inferInsert, 'id' | 'ownerId'>>
 ) {
     try {
+        if(updates.status === 'Decommissioned') updates.decommissionedAt = new Date();
+        else updates.decommissionedAt = null;
+
         const [gadget] = await drizzle.update(gadgets)
         .set(updates)
         .where(and(

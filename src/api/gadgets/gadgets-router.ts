@@ -3,7 +3,7 @@ import { type AppDependencies } from '@/types/app-DI';
 import { validateBody } from '@/middlewares/body-validator';
 
 import { selfDestructPostHandler } from './self-destruct.post';
-import { gadgetsDeleteSchema, gadgetsPatchSchema } from '@/types/api/gadgets';
+import { gadgetsPatchSchema } from '@/types/api/gadgets';
 import { gadgetsGetHandler } from './index.get';
 import { gadgetsPostHandler } from './index.post';
 import { gadgetsPatchHandler } from './index.patch';
@@ -15,7 +15,7 @@ export const gadgetsRouter = (di: AppDependencies): Router => {
     router.get('/', gadgetsGetHandler(di));
     router.post('/', gadgetsPostHandler(di));
     router.patch('/', validateBody(gadgetsPatchSchema), gadgetsPatchHandler(di));
-    router.delete('/', validateBody(gadgetsDeleteSchema), gadgetsDeleteHandler(di));
+    router.delete('/', gadgetsDeleteHandler(di));
 
     router.post('/:gadgetId/self-destruct', selfDestructPostHandler(di));
 

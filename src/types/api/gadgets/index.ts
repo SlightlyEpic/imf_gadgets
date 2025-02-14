@@ -42,17 +42,11 @@ export type GadgetsPatchErrorResponse = AuthenticationError | ValidationError<Ga
     details?: unknown,
 }
 
-export const gadgetsDeleteSchema = z.object({
-    id: z.string().uuid(),
-});
-
-export type GadgetsDeleteBody = z.infer<typeof gadgetsDeleteSchema>;
-
 export type GadgetsDeleteSuccessResponse = {
     message: string,
 }
 
-export type GadgetsDeleteErrorResponse = AuthenticationError | ValidationError<GadgetsDeleteBody> | {
+export type GadgetsDeleteErrorResponse = AuthenticationError | {
     error: 'Unknown_Error' | 'Invalid_Gadget_Id' | 'Gadget_Already_Decommissioned',
     errorMessage: string,
     details?: unknown,
