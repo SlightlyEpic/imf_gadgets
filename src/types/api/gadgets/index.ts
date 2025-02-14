@@ -37,7 +37,7 @@ export type GadgetsPatchSuccessResponse = {
 }
 
 export type GadgetsPatchErrorResponse = AuthenticationError | ValidationError<GadgetsPatchBody> | {
-    error: 'Unknown_Error',
+    error: 'Unknown_Error' | 'Duplicate_Name',
     errorMessage: string,
     details?: unknown,
 }
