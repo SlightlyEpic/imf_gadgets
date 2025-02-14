@@ -21,7 +21,7 @@ export const isUniqueViolation = (err: PostgresError) => err.code === '23505';
 export const isCheckViolation = (err: PostgresError) => err.code === '23514';
 
 // Encapsulate driver errors into a consistent format for easier error handling
-export type QueryErrorType = 'Integrity_Violation' | 'Unique_Violation' | 'Check_Violation' | 'Unknown_Error';
+export type QueryErrorType = 'Integrity_Violation' | 'Unique_Violation' | 'Check_Violation' | 'Unknown_Error' | 'No_Match_Error';
 export class QueryError {
     type: QueryErrorType;
     message: string;

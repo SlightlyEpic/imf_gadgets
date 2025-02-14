@@ -2,7 +2,7 @@ import { type RequestHandler } from 'express';
 import { type AppDependencies } from '@/types/app-DI';
 import { ReqUser } from '@/middlewares/require-auth';
 import { queries } from '@/database/queries';
-import { GadgetsPatchBody, GadgetsPatchErrorResponse, GadgetsPatchSuccessResponse, GadgetsPostErrorResponse, type GadgetsGetSuccessResponse, type GadgetsPostSuccessResponse } from '@/types/api/gadgets';
+import { GadgetsDeleteBody, GadgetsDeleteErrorResponse, GadgetsDeleteSuccessResponse, GadgetsPatchBody, GadgetsPatchErrorResponse, GadgetsPatchSuccessResponse, GadgetsPostErrorResponse, type GadgetsGetSuccessResponse, type GadgetsPostSuccessResponse } from '@/types/api/gadgets';
 import { gadgetStatus } from '@/database/schema/gadgets.sql';
 import { randomGadgetName } from '@/utils/gadget-names';
 import { type QueryError } from '@/utils/pg-error';
@@ -112,6 +112,12 @@ export const gadgetsPatchHandler = (di: AppDependencies): RequestHandler =>
                     errorMessage: 'Another gadget with this name already exists',
                 };
                 res.status(400).send(resp);
+            } else if(err.type === 'No_Match_Error') {
+                const resp: GadgetsPatchErrorResponse = {
+                    error: 'Invalid_Id',
+                    errorMessage: 'You don\'t have any gadget with this Id',
+                };
+                res.status(400).send(resp);
             } else {
                 const resp: GadgetsPatchErrorResponse = {
                     error: 'Unknown_Error',
@@ -123,6 +129,37 @@ export const gadgetsPatchHandler = (di: AppDependencies): RequestHandler =>
     };
 
 export const gadgetsDeleteHandler = (di: AppDependencies): RequestHandler =>
-    (req, res) => {
+    async (req, res) => {
+        // @ts-expect-error
+        const user = req.user as ReqUser;
+        const body = req.body as GadgetsDeleteBody;
 
+        try {
+            await queries.gadgets.updateGadgetIfOwned(
+                di.drizzle, user.id, body.id, {
+                    status: 'Decommissioned',
+                    decommissionedAt: new Date(),
+                }
+            );
+
+            const resp: GadgetsDeleteSuccessResponse = {
+                message: 'Gadget was decommissioned successfully',
+            };
+            res.send(resp);
+        } catch(_err: unknown) {
+            const err = _err as QueryError;
+            if(err.type === 'No_Match_Error') {
+                const resp: GadgetsDeleteErrorResponse = {
+                    error: 'Invalid_Id',
+                    errorMessage: 'You don\'t have any gadget with this Id',
+                };
+                res.status(400).send(resp);
+            } else {
+                const resp: GadgetsDeleteErrorResponse = {
+                    error: 'Unknown_Error',
+                    errorMessage: 'Unknown Error',
+                };
+                res.status(500).send(resp);
+            }
+        }
     };

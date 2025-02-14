@@ -37,7 +37,7 @@ export type GadgetsPatchSuccessResponse = {
 }
 
 export type GadgetsPatchErrorResponse = AuthenticationError | ValidationError<GadgetsPatchBody> | {
-    error: 'Unknown_Error' | 'Duplicate_Name',
+    error: 'Unknown_Error' | 'Duplicate_Name' | 'Invalid_Id',
     errorMessage: string,
     details?: unknown,
 }
@@ -48,10 +48,12 @@ export const gadgetsDeleteSchema = z.object({
 
 export type GadgetsDeleteBody = z.infer<typeof gadgetsDeleteSchema>;
 
-export type GadgetsDeleteSuccessResponse = undefined;   // Nothing is returned
+export type GadgetsDeleteSuccessResponse = {
+    message: string,
+}
 
 export type GadgetsDeleteErrorResponse = AuthenticationError | ValidationError<GadgetsDeleteBody> | {
-    error: 'Unknown_Error' | 'Gadget_Already_Deleted',
+    error: 'Unknown_Error' | 'Invalid_Id',
     errorMessage: string,
     details?: unknown,
 }

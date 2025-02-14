@@ -25,6 +25,13 @@ export async function updateGadgetIfOwned(
         ))
         .returning();
 
+        if(!gadget) {
+            throw new QueryError({
+                type: 'No_Match_Error',
+                message: 'No gadgets with matching Id found',
+            });
+        }
+
         return gadget;
     } catch(err: unknown) {
         if(err instanceof pg.PostgresError && isUniqueViolation(err)) {
