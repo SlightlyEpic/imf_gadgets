@@ -8,6 +8,7 @@ export function readEnv(): Env {
         POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
         POSTGRES_DATABASE: process.env.POSTGRES_DATABASE,
         PORT: process.env.PORT,
+        JWT_SIGNING_SECRET: process.env.JWT_SIGNING_SECRET,
     };
 
     const parseResult = envSchema.safeParse(maybeEnv);
