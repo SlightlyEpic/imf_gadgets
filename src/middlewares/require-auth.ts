@@ -26,10 +26,10 @@ export const requireAuth = (di: AppDependencies): RequestHandler =>
         let reissue = false;
         let accessToken: AccessToken | undefined;
 
-        if(!accessTokenStr) reissue = true;
-        else {
+        if(!accessTokenStr) {
+            reissue = true;
+        } else {
             const _accessToken = await jwtHelper.verifyAccessTokenString(di.env, accessTokenStr);
-
             if(typeof _accessToken === 'string') {
                 if(_accessToken === 'TokenExpiredError') reissue = true;
                 else {

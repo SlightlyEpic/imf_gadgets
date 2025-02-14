@@ -10,7 +10,7 @@ export function createTokensForUser(env: Env, user: typeof schema.users.$inferSe
         {
             iss: 'IMF Gadgets API',
             iat: now,
-            exp: 60 * 60,   // 1 hour
+            exp: now + 60 * 60,   // 1 hour
             sub: user.id,
             email: user.email,
             type: 'access',
@@ -22,7 +22,7 @@ export function createTokensForUser(env: Env, user: typeof schema.users.$inferSe
         {
             iss: 'IMF Gadgets API',
             iat: now,
-            exp: 30 * 24 * 60 * 60,   // 1 month
+            exp: now + 30 * 24 * 60 * 60,   // 1 month
             sub: user.id,
             email: user.email,
             type: 'refresh',
@@ -40,7 +40,7 @@ export function accessTokenFromRefreshToken(env: Env, refreshToken: RefreshToken
         {
             iss: 'IMF Gadgets API',
             iat: now,
-            exp: 60 * 60,   // 1 hour
+            exp: now + 60 * 60,   // 1 hour
             sub: refreshToken.sub,
             email: refreshToken.email,
             type: 'access',
