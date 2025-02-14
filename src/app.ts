@@ -41,12 +41,17 @@ export function createApp(di: AppDependencies): ReturnType<typeof express> {
     app.use(express.json());
     app.use(cookieParser());
 
+    app.get('/healthz', (req, res) => {
+        res.send({
+            message: 'Healthy'
+        });
+    })
     app.get('/openapi.json', (req, res) => {
         res.send(openapiSpec);
     });
     app.get('/swagger', (req, res) => {
         res.sendFile(__dirname + '/public/swagger.html');
-    })
+    });
 
     app.use('/api', apiRouter(di));
 
