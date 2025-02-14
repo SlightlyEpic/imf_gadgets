@@ -17,7 +17,11 @@ export type GadgetsPostSuccessResponse = {
     gadget: typeof schema.gadgets.$inferSelect,
 };
 
-export type GadgetsPostErrorResponse = AuthenticationError;
+export type GadgetsPostErrorResponse = AuthenticationError | {
+    error: 'Unknown_Error' | 'Invalid_User_Id',
+    errorMessage: string,
+    details?: unknown,
+};
 
 export const gadgetsPatchSchema = z.object({
     id: z.string().uuid(),
