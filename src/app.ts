@@ -15,8 +15,8 @@ export function createApp(di: AppDependencies): ReturnType<typeof express> {
                 title: 'IMF Gadget API',
                 version: '1.0.0',
                 description: 'An API for managing IMF\'s gadget inventory, including retrieval, updates, and self-destruction.'
-                + '<br>Made by Abhigyan Niranjan as Upraised\'s Backend Intern Assignment.',
-                
+                + '<br />Made by Abhigyan Niranjan as Upraised\'s Backend Intern Assignment.'
+                + '<br />GitHub Link: https://github.com/SlightlyEpic/imf_gadgets'
             },
             tags: [
                 {
